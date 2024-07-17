@@ -28,14 +28,13 @@ app.use(express.urlencoded({
 // using this we create and define a place (basically a folder) to keep our public assets and files etc
 app.use(express.static("public"))
 
-
-app.get('/api/v1', (req, res)=>{
-    res.send('Hello Kavyansh')
-})
-
 app.get('/', (req, res)=>{
     res.send('Hello Kavyansh')
 })
+
+import commentRouter from './routes/comment.route.js'
+
+app.use('/comment', commentRouter)
 
 
 

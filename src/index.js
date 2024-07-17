@@ -26,3 +26,4 @@ connectDB()
     console.log("failed to start server: ", err.message)
 })
 
+export default app

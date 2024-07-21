@@ -4,7 +4,8 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 
 const addComment = asyncHandler(async (req, res) => {
     const commentBody = req.body.commentBody
-    const tags = ["positive", "negative"]
+    const tags = req.body.tags
+    // const tags = ["positive", "negative"]
 
     const comment = await Comment.create({
         commentBody,

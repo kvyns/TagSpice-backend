@@ -33,8 +33,9 @@ app.get('/', (req, res)=>{
 })
 
 import commentRouter from './routes/comment.route.js'
-
+import userRouter from './routes/user.route.js'
 app.use('/comment', commentRouter)
+app.use('/user', userRouter)
 
 
 

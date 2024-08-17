@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Comment } from "../models/comment.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/AsyncHandler.js";
@@ -5,11 +6,13 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 const addComment = asyncHandler(async (req, res) => {
     const commentBody = req.body.commentBody
     const tags = req.body.tags
+    const actionWords = req.body.actionWords
     // const tags = ["positive", "negative"]
 
     const comment = await Comment.create({
         commentBody,
-        tags
+        tags,
+        actionWords
     })
 
     if (!comment) {
@@ -81,5 +84,35 @@ const editComment = asyncHandler(async (req, res)=>{
     })
     
 })
+const deleteComments = asyncHandler(async (req, res)=>{
+  
+    const { ids } = req.body;
+    console.log("ids", ids)
+  
+    if (!Array.isArray(ids) || ids.length === 0) {
+        return res.status(400).json({ error: 'Invalid input: ids must be a non-empty array' });
+    }
 
-export { addComment, getComments, deleteComment, editComment }
+    // Validate that all IDs are valid ObjectId
+    if (!ids.every(id => mongoose.Types.ObjectId.isValid(id))) {
+        return res.status(400).json({ error: 'Invalid IDs format' });
+      }
+      console.log("Reached after validation")
+      const result = await Comment.deleteMany({ _id: { $in: ids } }); 
+      console.log("Reached after validation", result)
+
+    if(!result){
+        return res.status(400).send({
+            message:"Failed to delete the comments"
+        })
+    }
+
+    return res.status(200).send(
+        {
+            message: "comments deleted successfully"
+        }
+    )   
+
+})
+
+export { addComment, getComments, deleteComment, editComment, deleteComments }

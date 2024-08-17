@@ -1,20 +1,36 @@
 import mongoose, { Schema } from "mongoose";
 
-const commentSchema = new Schema({
-    // uid:{
-    //     type: mongoose.Schema.ObjectId,
-    //     required: true,
-    //     index: true
-    // },
-    commentBody:{
-        type: String,
-        required: true,
+const commentSchema = new Schema(
+  {
+    commentBody: {
+      type: String,
+      required: true,
     },
     tags: {
-        type:[{
-            type:String
-        }]
-    }
-},{timestamps:true})
+      type: [
+        {
+          type: String,
+          index:true
+        },
+      ],
+    },
+    actionWords: {
+      type: [
+        {
+          type: String,
+        },
+      ],
+    },
+    collectionIDs: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "CommentCollection",
+        },
+      ],
+    },
+  },
+  { timestamps: true }
+);
 
-export const Comment = mongoose.model("Comment", commentSchema)
+export const Comment = mongoose.model("Comment", commentSchema);

@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from "cors";
+import cookieParser from 'cookie-parser';
 
 const app = express()
 
@@ -28,12 +29,16 @@ app.use(express.urlencoded({
 // using this we create and define a place (basically a folder) to keep our public assets and files etc
 app.use(express.static("public"))
 
+// cookie parser middle ware to add .cookies to our request in which we can access the cookies in a users browser
+app.use(cookieParser())
+
 app.get('/', (req, res)=>{
     res.send('Hello Kavyansh')
 })
 
 import commentRouter from './routes/comment.route.js'
 import userRouter from './routes/user.route.js'
+
 app.use('/comment', commentRouter)
 app.use('/user', userRouter)
 

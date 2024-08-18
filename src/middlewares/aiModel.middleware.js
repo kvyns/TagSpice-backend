@@ -14,7 +14,6 @@ const model = new ChatGroq({
 const systemMessageForTags = "You are a text parses, you will be given a text and you have to label the text using only the following labels and nothing else. The labels are positive, negative, sugggestion. Only return the labels that you think apply separated by comma. Dont return in any other format"
 
 
-
 const tagPromptTemplate = ChatPromptTemplate.fromMessages([
     ["system", systemMessageForTags],
     ["user", "{userMessage}"]
